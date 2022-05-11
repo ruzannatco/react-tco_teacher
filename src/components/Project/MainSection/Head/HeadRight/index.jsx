@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Input } from "reactstrap";
 import "./styles.css";
+import {SharedModal} from "../../../../../shared/SharedModal";
 
 const SortSelect = () => {
   return (
@@ -18,15 +19,34 @@ const SearchInput = () => {
 };
 
 export const HeadRight = () => {
+  const [isShowAddTaskModal, setIsShowAddTaskModal] = useState(false);
+  const handleBtnClick = () => {
+    if (isShowAddTaskModal) {
+      setIsShowAddTaskModal(false);
+    } else {
+      setIsShowAddTaskModal(true);
+    }
+  };
+
   return (
     <div className="main-section-head-right">
-      <Button color="primary" outline style={{ width: "100%" }}>
+      <Button
+        color="primary"
+        outline
+        style={{ width: "100%" }}
+        onClick={handleBtnClick}
+      >
         Add New Task
       </Button>
       <SortSelect />
       <SearchInput />
-
-      <div>Modal</div>
+      {isShowAddTaskModal && (
+        <SharedModal
+          onClose={() => {
+            setIsShowAddTaskModal(false);
+          }}
+        />
+      )}
     </div>
   );
 };
