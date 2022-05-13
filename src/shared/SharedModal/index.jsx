@@ -9,8 +9,9 @@ import {
 } from "reactstrap";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { isRequired, maxLength20, minLength3 } from "../../helpers/validations";
+import { BACKEND_URL } from "../../consts";
 
-const AddTaskForm = ({ onSubmitCallback }) => {
+const AddTaskForm = ({ onSubmitCallback, setTasks }) => {
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
 
@@ -44,7 +45,30 @@ const AddTaskForm = ({ onSubmitCallback }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // onSubmitCallback();
+    const {
+      title: { value: title },
+      description: { value: description },
+    } = inputsData;
+
+    const formData = {
+      title,
+      description,
+    };
+
+    fetch(`${BACKEND_URL}/task`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks((prev) => {
+          return [...prev, data];
+        });
+        onSubmitCallback();
+      });
   };
 
   const handleChange = (e) => {
@@ -115,12 +139,13 @@ const AddTaskForm = ({ onSubmitCallback }) => {
     </Form>
   );
 };
-export const SharedModal = ({ onClose }) => {
+
+export const SharedModal = ({ onClose, setTasks }) => {
   return (
     <Modal toggle={onClose} isOpen={true}>
       <ModalHeader toggle={onClose}>Modal title</ModalHeader>
       <ModalBody>
-        <AddTaskForm onSubmitCallback={onClose} />
+        <AddTaskForm onSubmitCallback={onClose} setTasks={setTasks} />
       </ModalBody>
       <ModalFooter>
         <Button onClick={onClose}>Cancel</Button>
