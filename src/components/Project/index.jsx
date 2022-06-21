@@ -15,15 +15,12 @@ export const Project = () => {
     const query = generateQuery(queryObject);
 
     getTasksRequest(query).then((data) => {
-      setTasks(data);
+      setTasks(data)
     });
   }, [queryObject]);
 
   /* cashed callbacks */
   const setFilterField = useCallback((filterEntries) => {
-    // ['sort' , 'creation_date_oldest']
-    //['search' ,'aaa']
-
     const [name, value] = filterEntries;
 
     setQueryObject((prev) => {
@@ -44,12 +41,17 @@ export const Project = () => {
 
   return (
     <div className="project-layout">
-      <FilterSection tasks={tasks} setTasks={setTasks} />
+      <FilterSection setFilterField={setFilterField} />
       <MainSection
-        tasks={tasks}
         setTasks={setTasks}
         setFilterField={setFilterField}
       />
     </div>
   );
 };
+
+
+
+export const Project = connect(null, {
+  setTasks: setTasksAction
+})(ConnectedProject)
