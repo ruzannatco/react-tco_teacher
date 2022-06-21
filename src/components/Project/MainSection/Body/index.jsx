@@ -13,11 +13,10 @@ import "./styles.css";
 
 export const Body = ({ tasks }) => {
   return (
-      <div className="main-section-body">
-        {tasks.map((todo) => {
-          return <CardComponent key={todo._id} todo={todo} />;
-        })}
-      </div>
+    <div className="main-section-body">
+      {tasks.map((todo) => {
+        return <CardComponent key={todo._id} todo={todo} />;
+      })}
+    </div>
   );
 };
-

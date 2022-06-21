@@ -15,21 +15,6 @@ const AddTaskForm = ({ onSubmitCallback, setTasks }) => {
   const titleInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
 
-  //-------------unContolled Component -------------
-  //   const onSubmit = (e) => {
-  //     console.log("form submitted!");
-
-  //     const titleValue = titleInputRef.current.value;
-  //     console.log("🚀 ~ titleValue", titleValue);
-  //     const descValue = descriptionInputRef.current.value;
-  //     console.log("🚀 ~ descValue", descValue);
-
-  //     e.preventDefault();
-
-  //     // onSubmitCallback();
-  //   };
-
-  //-------------Controlled Component -------------
   const [inputsData, setInputsData] = useState({
     title: {
       value: "",
